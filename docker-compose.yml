@@ -1,0 +1,65 @@
+services:
+  odoo-web:
+    container_name: odoo-web18
+    image: odoo:18.0
+    depends_on:
+      - postgres
+      - nginx-proxy-manager
+    ports:
+      - "8069:8069"
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons-extra:/mnt/extra-addons
+      - ./addons:/mnt/enterprise-addons
+    restart: always
+    user: root
+
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: postgres_db3
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Sergio55
+      POSTGRES_DB: mydb
+    user: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
+    restart: always
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+    
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin18
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    restart: always
+
+  nginx-proxy-manager:
+    container_name: nginx-proxy-manager18
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"    # HTTP
+      - "443:443"  # HTTPS
+      - "81:81"    # Panel de administración de NPM
+    volumes:
+      - nginx_data:/data
+      - nginx_letsencrypt:/etc/letsencrypt
+
+volumes:
+  odoo-web-data:
+  postgres_data:
+  pgadmin_data:
+  nginx_data:
+  nginx_letsencrypt:
