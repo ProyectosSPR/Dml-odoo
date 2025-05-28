@@ -1,0 +1,46 @@
+url de autenticaciones para token final https://auth.mercadolibre.com.mx/authorization?response_type=code&client_id=5146593005132&redirect_uri=https://parakeet-cuddly-fowl.ngrok-free.app/mercado
+
+
+
+código para postman (recuerda en no usar el code_verifier al importar a postman):
+curl -X POST \
+-H 'accept: application/json' \
+-H 'content-type: application/x-www-form-urlencoded' \
+'https://api.mercadolibre.com/oauth/to... \
+-d 'grant_type=authorization_code' \
+-d 'client_id=5146593005132' \
+-d 'client_secret=GffPqZmL4SNVhcyd35ODwD1raFeoMTbQ' \
+-d 'code=TG-68354723d9e2de0001d56b7c-706131285' \ 
+-d 'redirect_uri=https://parakeet-cuddly-fowl.ngrok-free.app/mercado' \
+-d 'code_verifier=$CODE_VERIFIER'
+
+
+clave secreta mercado libre GffPqZmL4SNVhcyd35ODwD1raFeoMTbQ
+app id 5146593005132
+
+
+usuario de prueba venta
+{
+    "id": 2462489422,
+    "email": "test_user_1620436286@testuser.com",
+    "nickname": "TTEST37465",
+    "site_status": "active",
+    "password": "18oEUdJmzh"
+}
+{
+    "access_token": "APP_USR-5146593005132-052702-d6a0c5133935cbe64769ff7b7d537c2b-2462489422",
+    "token_type": "Bearer",
+    "expires_in": 21600,
+    "scope": "offline_access read write",
+    "user_id": 2462489422,
+    "refresh_token": "TG-683558f081d1ea000180c7f1-2462489422"
+}
+
+usuario de prueba compra
+{
+    "id": 2462489424,
+    "email": "test_user_1957196386@testuser.com",
+    "nickname": "TESTUSER1957196386",
+    "site_status": "active",
+    "password": "5Cr4V8kgUa"
+}
